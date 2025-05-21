@@ -1,5 +1,14 @@
+import './App.css'
+import Post from './components/Post'
+
 function App() {
-  return <h1>Hello World!👌</h1>
+
+  return (
+    <main>
+      <h1>Hello World!👌</h1>
+      <div><Post /></div>
+    </main>
+  )
 }
 
 export default App
