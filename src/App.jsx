@@ -1,5 +1,5 @@
-import './App.css'
 import PostList from './components/PostsList'
+import './App.css'
 
 function App() {
 
