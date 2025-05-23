@@ -2,9 +2,13 @@ import classes from './NewPost.module.css';
 import { useState } from 'react';
 
 function NewPost({ onCancel, onAddPost }) {
+    const [enteredTitle, setEnteredTitle] = useState('title');
     const [enteredBody, setEnteredBody] = useState('body');
     const [enteredAuthor, setEnteredAuthor] = useState('author');
 
+    function titleChangeHandler(event) {
+        setEnteredTitle(event.target.value);
+    }
     function bodyChangeHandler(event) {
         setEnteredBody(event.target.value);
     }
@@ -15,6 +19,7 @@ function NewPost({ onCancel, onAddPost }) {
     function submitHandler(event) {
         event.preventDefault();
         const postData = {
+            title: enteredTitle,
             body: enteredBody,
             author: enteredAuthor,
         };
@@ -24,6 +29,10 @@ function NewPost({ onCancel, onAddPost }) {
 
   return (
     <form className={classes.form} onSubmit={submitHandler}>
+      <p>
+        <label htmlFor="title">Title</label>
+        <input type="text" id="title" required onChange={titleChangeHandler}/>
+      </p>
       <p>
         <label htmlFor="body">Text</label>
         <textarea id="body" required rows={3} onChange={bodyChangeHandler}/>
