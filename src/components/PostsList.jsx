@@ -5,18 +5,16 @@ import Modal from './Modal'
 import { useState, useEffect } from "react";
 
 function PostsList({isModalVisible, onHideModal}) {
-    // fetch('http://localhost:8080/posts')
-    // .then((response) => response.json())
-    // .then((data) => {
-    //     setPosts(data.posts);
-    // })
+    const [isLoading, setIsLoading] = useState(false);
 
     const [posts, setPosts] = useState([]);
     useEffect(() => {
         async function fetchPosts() {
+            setIsLoading(true);
             const response = await fetch('http://localhost:8080/posts');
             const data = await response.json();
             setPosts(data.posts);
+            setIsLoading(false);
         }
         fetchPosts();
     },[]);
@@ -42,12 +40,12 @@ function PostsList({isModalVisible, onHideModal}) {
         </Modal>
     )}
     <h2>All Posts</h2>
-    {posts.length === 0 && (
+    {!isLoading && posts.length === 0 && (
         <div className={classes.noPosts}>
             <p>No posts found. Maybe add one?</p>
         </div>
     )}
-    {posts.length > 0 && (
+    {!isLoading && posts.length > 0 && (
         <ul className={classes.posts}>
         {posts.map( (post) => (
             <Post key={Math.random()*1000}
@@ -57,6 +55,11 @@ function PostsList({isModalVisible, onHideModal}) {
             />
         ))}
     </ul>
+    )}
+    {isLoading && (
+        <div className={classes.loading}>
+            <p>Loading...</p>
+        </div>
     )}
     
     </>
